@@ -7,6 +7,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.light(),
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            "TEST",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
         body: SafeArea(
           child: Center(),
         ),
