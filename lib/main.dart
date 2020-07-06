@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/src/ui/app.dart';
+import 'package:grow_plant/src/ui/app.dart';
 
 void main() {
   runApp(MyApp());
