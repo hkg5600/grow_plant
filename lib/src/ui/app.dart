@@ -30,7 +30,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   List<CameraDescription> cameras;
   bool _isCameraAvailable = false;
   CameraController _controller;
-  Future<void> _initializeControllerFuture;
 
   Future<void> _setUpCamera() async {
     try {
@@ -40,7 +39,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         ResolutionPreset.medium,
       );
       await _controller.initialize();
-      debugPrint("TEST");
     } on CameraException catch (_) {
       debugPrint(_.toString() + "THIS IS ERROR MESSAGE");
     }
@@ -76,7 +74,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         // onPressed 콜백을 제공합니다.
         onPressed: () async {
           try {
-            await _initializeControllerFuture;
             final path = join(
               (await getTemporaryDirectory()).path,
               '${DateTime.now()}.png',
