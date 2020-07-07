@@ -1,9 +1,9 @@
+import 'package:grow_plant/src/model/post.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper = DatabaseHelper._createInstance();
-
   final Future<Database> database = initDatabase();
 
   static Future<Database> initDatabase() async {
@@ -20,5 +20,20 @@ class DatabaseHelper {
 
   factory DatabaseHelper() {
     return _databaseHelper;
+  }
+
+  Future<int> insertPost(Post post) async {
+    final database = await this.database;
+    var result = await database.insert('posts', post.toJson());
+    return result;
+  }
+
+  Future<List<Post>> getPostList() async {
+    final databae = await this.database;
+
+    final List<Map<String, dynamic>> maps =
+        await databae.query('posts', orderBy: 'id DESC');
+
+    return List.generate(maps.length, (index) => Post.fromJson(maps[index]));
   }
 }
