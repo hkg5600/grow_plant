@@ -57,7 +57,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   void dispose() {
-    // 위젯의 생명주기 종료시 컨트롤러 역시 해제시켜줍니다.
     _controller.dispose();
     super.dispose();
   }
@@ -66,13 +65,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Take a picture')),
-      body: (_isCameraAvailable)
+      body: _isCameraAvailable
           ? CameraPreview(_controller)
           : Center(child: CircularProgressIndicator()),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.camera_alt),
-        // onPressed 콜백을 제공합니다.
         onPressed: () async {
+          if (_isCameraAvailable) return;
           try {
             final path = join(
               (await getTemporaryDirectory()).path,
@@ -96,7 +95,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-// 사용자가 촬영한 사진을 보여주는 위젯
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
 
@@ -106,8 +104,6 @@ class DisplayPictureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Display the Picture')),
-      // 이미지는 디바이스에 파일로 저장됩니다. 이미지를 보여주기 위해 주어진
-      // 경로로 `Image.file`을 생성하세요.
       body: Image.file(File(imagePath)),
     );
   }
